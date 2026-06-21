@@ -151,25 +151,36 @@ HTTP Request
 
 ```
 public 스키마 (공통)
-  └─ tenants            ← 테넌트 목록
-  └─ tenant_schemas     ← 테넌트별 스키마 이름 매핑
+  └─ tenants            ← 테넌트 목록 (id, name, slug, schema_name, plan_type, status, ...)
 
-tenant_acme 스키마 (테넌트 A)
+tenant_acme-corp 스키마 (테넌트 A, schema_name = "tenant_acme-corp")
   └─ aws_accounts
   └─ aws_resources
   └─ cost_records
-  └─ ...
+  └─ budget_configs
+  └─ alert_rules
+  └─ alert_history
+  └─ reports
 
 tenant_xyz 스키마 (테넌트 B)
   └─ aws_accounts
   └─ ...
 ```
 
+**Tenant 엔티티 주요 필드:**
+- `id: UUID` — PK
+- `slug: VARCHAR(50)` — URL 식별자 (예: "acme-corp")
+- `schemaName: VARCHAR(100)` — PostgreSQL 스키마 이름 (예: "tenant_acme-corp")
+- `planType: VARCHAR(20)` — 구독 플랜 (DEFAULT: 'FREE')
+- `status: VARCHAR(20)` — 테넌트 상태 (DEFAULT: 'ACTIVE')
+- `deletedAt` — soft delete (`@DeleteDateColumn`)
+
 **TenantDatasourceService 흐름:**
-1. 요청 헤더 `x-tenant-id` 추출 (TenantMiddleware)
-2. `Map<tenantId, DataSource>` 에서 DataSource 조회
-3. 없으면 새 DataSource 생성 (`search_path = tenant_{slug}`)
-4. Repository가 해당 DataSource 사용
+1. 요청 헤더 `x-tenant-id` 추출 (TenantMiddleware → AsyncLocalStorage)
+2. `Map<tenantSlug, DataSource>` 에서 DataSource 조회 (캐시 히트)
+3. 없으면 새 DataSource 생성 (`schema: tenant_${slug}`)
+4. `CREATE SCHEMA IF NOT EXISTS "tenant_${slug}"` 실행
+5. Repository가 해당 DataSource 사용
 
 ---
 

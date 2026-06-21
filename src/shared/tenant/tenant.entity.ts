@@ -25,11 +25,10 @@ export class Tenant {
    * URL에 안전한 식별자 "acme-corp", "my-company" 형태
    * 테넌트별 스키마 이름 "tenant_" + slug을 만들 때 이 값을 사용
    */
-  @Column({ unique: true, length: 100 })
+  @Column({ unique: true, length: 50 })
   slug: string;
 
-  // 한표에 표시하는 이름
-  @Column({ length: 255 })
+  @Column({ length: 100 })
   name: string;
 
   /**
