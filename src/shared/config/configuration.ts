@@ -12,11 +12,11 @@ export default () => ({
     host: process.env.DB_HOST ?? 'localhost',
     port: parseInt(process.env.DB_PORT ?? '5432', 10),
     username: process.env.DB_USERNAME ?? '',
-    passowrd: process.env.DB_PASSWORD ?? '',
+    password: process.env.DB_PASSWORD ?? '',
     database: process.env.DB_DATABASE ?? 'cloud_ledger',
   },
   aws: {
-    access: process.env.AWS_ACCESS_KEY_ID ?? '',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? '',
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY ?? '',
     roleSessionName:
       process.env.AWS_ROLE_SESSION_NAME ?? 'cloud-ledger-session',
