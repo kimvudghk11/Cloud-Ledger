@@ -5,7 +5,7 @@
 
 ## Tasks
 - [x] Task 1: .env + ConfigModule 설정 (commits 4946c0b..5a3f6bf, review clean)
-- [ ] Task 2: Tenant 엔티티 + DDL 작성
+- [x] Task 2: Tenant 엔티티 + DDL 작성 (commits 완료, review clean)
 - [ ] Task 3: DatabaseModule — 공통 DataSource 등록
 - [ ] Task 4: TenantDatasourceService — 테넌트별 DataSource 캐시
 - [ ] Task 5: TenantContext + TenantMiddleware + TenantModule

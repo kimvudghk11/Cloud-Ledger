@@ -59,5 +59,5 @@ export class Tenant {
    * 이후 find() 쿼리에서 자동으로 제외 (WHERE deleted_at IS NULL)
    */
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
-  deletedAt: Date;
+  deletedAt: Date | null;
 }
