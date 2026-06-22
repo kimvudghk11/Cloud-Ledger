@@ -59,6 +59,17 @@ describe('TenantDatasourceService', () => {
     expect(ds1).not.toBe(ds2);
   });
 
+  it('동시에 같은 tenantSlug로 요청해도 DataSource를 한 번만 생성한다', async () => {
+    // Promise.all로 동시 호출 — race condition이 없으면 initialize는 1번만 실행
+    const [ds1, ds2] = await Promise.all([
+      service.getDataSource('acme'),
+      service.getDataSource('acme'),
+    ]);
+
+    expect(ds1).toBe(ds2);
+    expect(mockDs.initialize).toHaveBeenCalledTimes(1);
+  });
+
   it('onModuleDestroy 호출 시 모든 DataSource를 닫는다', async () => {
     await service.getDataSource('acme');
     await service.onModuleDestroy();
