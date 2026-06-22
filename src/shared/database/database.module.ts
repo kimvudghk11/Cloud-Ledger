@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Tenant } from '../tenant/tenant.entity';
+import { TenantDatasourceService } from './tenant-datasource.service';
 
 @Module({
   imports: [
@@ -32,8 +33,9 @@ import { Tenant } from '../tenant/tenant.entity';
       }),
     }),
   ],
+  providers: [TenantDatasourceService],
   // TypeOrmModule을 exports해서 이 모듈을 import하는 곳에서
   // @InjectRepository(Tenant) 등을 사용할 수 있게 한다.
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, TenantDatasourceService],
 })
 export class DatabaseModule {}
