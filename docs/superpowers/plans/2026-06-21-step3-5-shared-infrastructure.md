@@ -1,5 +1,22 @@
 # Cloud-Ledger Step 3-5 구현 계획 (공유 인프라 레이어)
 
+---
+
+## 진행 상황 (2026-06-22 기준)
+
+| Task | 내용 | 상태 |
+|------|------|------|
+| Task 1 | .env + ConfigModule 설정 | ✅ 완료 |
+| Task 2 | Tenant 엔티티 + DDL | ✅ 완료 |
+| Task 3 | DatabaseModule — 공통 DataSource 등록 | ✅ 완료 |
+| Task 4 | TenantDatasourceService — 테넌트별 DataSource 캐시 | ✅ 완료 |
+| Task 5 | TenantContext + TenantMiddleware + TenantModule | ✅ 완료 |
+| **Task 6** | **AppModule 전체 연결 + 통합 확인** | **⬅ 다음 시작점** |
+
+> **다음 세션 시작:** Task 6 — `src/app.module.ts`에 DatabaseModule, TenantModule, TenantMiddleware를 연결하고 전체 테스트 통과 확인.
+
+---
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 환경변수(ConfigModule), 멀티테넌트 DataSource 캐시(TenantDatasourceService), 요청별 테넌트 식별(TenantMiddleware)을 구현해 공유 인프라 레이어를 완성한다.
